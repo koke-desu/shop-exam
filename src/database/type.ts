@@ -1,15 +1,13 @@
+import { Caractor, DefaultSkillName, DicedStatusName, UnDicedStatusName } from "./caractorType";
+
 // 商品の情報
-export type Item = {
-  id: string;
-  name: string;
-  description: string;
-  category: string;
-  icon: string;
-  stock: number;
+export type Item = Caractor & {
+  category: Category;
+  downloaded: number;
   reviews: Review[];
+  goods: number; // いいねの数
   timeStamp: Date;
   averageStars: number;
-  status: "Selled" | "Unsell";
 };
 
 // 商品のカテゴリー
