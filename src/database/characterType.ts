@@ -80,7 +80,7 @@ export const defaultSkillName = {
 } as const;
 export type DefaultSkillName = typeof defaultSkillName[SkillCategory][number];
 
-export type Caractor = {
+export type Character = {
   id: string;
   name: string;
   description: string;
