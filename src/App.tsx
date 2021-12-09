@@ -15,8 +15,11 @@ function App() {
       <Routes>
         <Route path="/" element={<TopPage />} />
         <Route path="/list" element={<ItemList />} />
-        <Route path="/item/:id" element={<Item />} />
+        <Route path="/item/:itemId" element={<Item />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/category/:categoryId" element={<ItemList />} />
+        <Route path="/create" element={<div></div>} />
+        <Route path="/manage" element={<div></div>} />
       </Routes>
     </BrowserRouter>
   );
