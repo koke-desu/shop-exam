@@ -2,7 +2,7 @@ import { getFirestore, collection, doc, getDocs } from "firebase/firestore";
 import { initialize } from "./initialize";
 import { Item as ItemType } from "./type";
 
-export class Item {
+export class ItemInterface {
   public static getAll = () => {
     initialize();
     const db = getFirestore();
