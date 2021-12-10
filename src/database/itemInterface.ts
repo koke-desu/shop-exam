@@ -7,7 +7,7 @@ export class ItemInterface {
     initialize();
     const db = getFirestore();
     return getDocs(collection(db, "items")).then((snaps) => {
-      return snaps.docs.map((doc) => doc.data());
+      return snaps.docs.map((doc) => doc.data() as ItemType);
     });
   };
 }
