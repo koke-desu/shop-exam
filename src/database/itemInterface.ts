@@ -1,4 +1,12 @@
-import { getFirestore, collection, doc, getDocs, Timestamp } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  addDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { initialize } from "./initialize";
 import { Item as ItemType } from "./type";
 import dayjs from "dayjs";
@@ -12,5 +20,21 @@ export class ItemInterface {
         (doc) => ({ ...doc.data(), timeStamp: dayjs(doc.data().timeStamp.toDate()) } as ItemType)
       );
     });
+  };
+
+  public static get = (id: string) => {
+    initialize();
+    const db = getFirestore();
+    return getDoc(doc(db, `items/${id}`)).then((snap) => {
+      return snap.data() as ItemType;
+    });
+  };
+
+  public static create = async (item: ItemType) => {
+    initialize();
+    const db = getFirestore();
+    const res = await addDoc(collection(db, "items"), item);
+
+    return updateDoc(res, { id: res.id });
   };
 }
