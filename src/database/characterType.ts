@@ -1,11 +1,11 @@
-const DicedStatusName = ["STR", "CON", "POW", "DEX", "APP", "SIZ", "INT", "EDU"] as const;
+export const DicedStatusName = ["STR", "CON", "POW", "DEX", "APP", "SIZ", "INT", "EDU"] as const;
 
 export type DicedStatusName = typeof DicedStatusName[number];
 
-const undicedStatusName = ["HP", "MP", "SAN", "アイデア", "幸運", "知識"] as const;
+export const undicedStatusName = ["HP", "MP", "SAN", "アイデア", "幸運", "知識"] as const;
 export type UnDicedStatusName = typeof undicedStatusName[number];
 
-const skillCategory = [
+export const skillCategory = [
   "戦闘",
   "武道",
   "技術",
@@ -87,15 +87,12 @@ export type Character = {
   job: string;
   icon: string;
   status: {
-    name: DicedStatusName | UnDicedStatusName;
-    value: number;
-  }[];
+    [name in DicedStatusName | UnDicedStatusName]: number;
+  };
   skill: {
-    name: DefaultSkillName | string;
-    value: number;
-  }[];
+    [name in DefaultSkillName | string]: number;
+  };
   items: {
-    name: string;
-    num: number;
+    [name in string]: number;
   };
 };
