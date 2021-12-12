@@ -1,4 +1,5 @@
 import { Character, DefaultSkillName, DicedStatusName, UnDicedStatusName } from "./characterType";
+import dayjs from "dayjs";
 
 // 商品の情報
 export type Item = Character & {
@@ -6,7 +7,7 @@ export type Item = Character & {
   downloaded: number; // ダウンロードされた回数
   reviews: Review[];
   goods: number; // いいねの数
-  timeStamp: Date;
+  timeStamp: dayjs.Dayjs;
 };
 
 // 商品のカテゴリー
@@ -19,7 +20,7 @@ export type Category = {
 // 商品をリスト表示するための最低限の情報
 export type ItemThumbnail = Pick<
   Item,
-  "id" | "name" | "status" | "icon" | "goods" | "downloaded" | "categoryId"
+  "id" | "name" | "status" | "icon" | "goods" | "downloaded" | "categoryId" | "timeStamp"
 >;
 
 // レビュー
@@ -27,7 +28,7 @@ export type Review = {
   id: string;
   title: string;
   body: string;
-  timeStamp: Date;
+  timeStamp: dayjs.Dayjs;
   stars: number;
 };
 
