@@ -1,6 +1,6 @@
-export const DicedStatusName = ["STR", "CON", "POW", "DEX", "APP", "SIZ", "INT", "EDU"] as const;
+export const dicedStatusName = ["STR", "CON", "POW", "DEX", "APP", "SIZ", "INT", "EDU"] as const;
 
-export type DicedStatusName = typeof DicedStatusName[number];
+export type DicedStatusName = typeof dicedStatusName[number];
 
 export const undicedStatusName = ["HP", "MP", "SAN", "アイデア", "幸運", "知識"] as const;
 export type UnDicedStatusName = typeof undicedStatusName[number];
@@ -90,7 +90,9 @@ export type Character = {
     [name in DicedStatusName | UnDicedStatusName]: number;
   };
   skill: {
-    [name in DefaultSkillName | string]: number;
+    [category in SkillCategory]: {
+      [name in DefaultSkillName | string]: number;
+    };
   };
   items: {
     [name in string]: number;
