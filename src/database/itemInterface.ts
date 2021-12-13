@@ -6,6 +6,7 @@ import {
   getDoc,
   addDoc,
   updateDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { initialize } from "./initialize";
 import { Item as ItemType } from "./type";
@@ -26,14 +27,17 @@ export class ItemInterface {
     initialize();
     const db = getFirestore();
     return getDoc(doc(db, `items/${id}`)).then((snap) => {
-      return snap.data() as ItemType;
+      return { ...snap.data(), timeStamp: dayjs(snap.data()?.timeStamp.toDate()) } as ItemType;
     });
   };
 
   public static create = async (item: ItemType) => {
     initialize();
     const db = getFirestore();
-    const res = await addDoc(collection(db, "items"), item);
+    const res = await addDoc(collection(db, "items"), {
+      ...item,
+      timeStamp: Timestamp.fromDate(item.timeStamp.toDate()),
+    });
 
     return updateDoc(res, { id: res.id });
   };
