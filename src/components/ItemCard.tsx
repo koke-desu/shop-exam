@@ -1,5 +1,6 @@
 import React from "react";
 import { Item as ItemType } from "../database/type";
+import { Link } from "react-router-dom";
 
 type Props = {
   item: ItemType;
@@ -7,7 +8,10 @@ type Props = {
 
 const ItemCard: React.VFC<Props> = ({ item }) => {
   return (
-    <div className="h-72 w-64 flex flex-col justify-self-center shadow-lg border border-gray-200">
+    <Link
+      to={`/item/${item.id}`}
+      className="h-72 w-64 flex flex-col justify-self-center shadow-lg border border-gray-200"
+    >
       {item.icon ? (
         <img src={item.icon} width="100%" height={144} alt={item.name} />
       ) : (
@@ -23,7 +27,7 @@ const ItemCard: React.VFC<Props> = ({ item }) => {
           <span className="text-sm ml-1">Download</span>
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 export default ItemCard;
