@@ -13,7 +13,12 @@ const ItemCard: React.VFC<Props> = ({ item }) => {
       className="h-72 w-64 flex flex-col justify-self-center shadow-lg border border-gray-200"
     >
       {item.icon ? (
-        <img src={item.icon} width="100%" height={144} alt={item.name} />
+        <img
+          src={item.icon}
+          className="w-full object-contain"
+          style={{ aspectRatio: "16/9" }}
+          alt={item.name}
+        />
       ) : (
         <div className="w-full h-36 flex items-center justify-center bg-white">
           <p className="text-center text-4xl text-gray-500 font-bold">No Image</p>
