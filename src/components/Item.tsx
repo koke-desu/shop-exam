@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { cartContext } from "../App";
 import { dicedStatusName, statusColor, undicedStatusName } from "../database/characterType";
 import { ItemInterface } from "../database/itemInterface";
 import { Item as ItemType } from "../database/type";
@@ -15,12 +16,30 @@ const Item: React.VFC<Props> = ({}) => {
     itemId && ItemInterface.get(itemId).then(setItem);
   }, []);
 
-  const onAddCart = () => {};
+  // カートへの追加処理。
+  const [showDialog, setShowDialog] = useState(false);
+  const { items, setCart } = useContext(cartContext);
+  const onAddCart = () => {
+    if (item === undefined) return;
+    setShowDialog(true);
+    setTimeout(() => {
+      setShowDialog(false);
+    }, 1500);
+    setCart({ items: [...items, item] });
+  };
 
   return !item ? (
     <div>商品が見つかりませんでした。</div>
   ) : (
-    <div className="container grid grid-cols-5 gap-12 ">
+    <div className="container grid grid-cols-5 gap-12 mx-auto ">
+      <div
+        className={`fixed fle justify-center items-center top-16 w-4/5 rounded-lg mx-auto p-4 shadow-lg bg-blue-300 ring-1 ring-offset-2 backdrop-blur-lg duration-300 ${
+          showDialog ? "opacity-100" : "opacity-0"
+        } `}
+      >
+        <p className="text-center">アイテムがカートに追加されました</p>
+      </div>
+
       <h1 className="col-span-full text-4xl">{item.name}</h1>
 
       <div className="col-span-3 flex flex-col gap-8">
