@@ -90,12 +90,12 @@ export type Character = {
     [name in DicedStatusName | UnDicedStatusName]: number;
   };
   skill: {
-    [category in SkillCategory]: {
+    [category in SkillCategory]?: {
       [name in DefaultSkillName | string]: number;
     };
   };
   items: {
-    [name in string]: number;
+    [name: string]: number;
   };
 };
 
@@ -139,4 +139,24 @@ export const statusColor = (val: number, name: DicedStatusName) => {
   if (diceRoll === "3D6+3") return case3(val);
 
   return "";
+};
+
+// アイデア、SAN値などの他の値を元に、算出する値を返す。
+export const calcStatus = (
+  status: { [name in DicedStatusName]: number },
+  name: UnDicedStatusName
+) => {
+  switch (name) {
+    case "SAN":
+    case "幸運":
+      return status.POW * 5;
+    case "アイデア":
+      return status.INT * 5;
+    case "知識":
+      return status.EDU * 5 >= 100 ? 99 : status.EDU * 5;
+    case "HP":
+      return (status.CON + status.SIZ) / 2;
+    case "MP":
+      return status.POW;
+  }
 };
