@@ -39,6 +39,8 @@ export class ItemInterface {
       timeStamp: Timestamp.fromDate(item.timeStamp.toDate()),
     });
 
-    return updateDoc(res, { id: res.id });
+    await updateDoc(res, { id: res.id });
+
+    return res;
   };
 }
