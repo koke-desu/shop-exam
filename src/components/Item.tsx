@@ -50,10 +50,14 @@ export default Item;
 // アイコンを表示。アイコンが存在しない場合は、”No Image”と表示する。
 const Icon = ({ icon }: { icon: string }) => {
   return icon ? (
-    <img src={icon} style={{ aspectRatio: "16/9" }} />
+    <img
+      src={icon}
+      style={{ aspectRatio: "16/9" }}
+      className="w-full object-contain border border-gray-300 shadow-lg"
+    />
   ) : (
     <div
-      className="w-full flex items-center justify-center bg-white border border-gray-300"
+      className="w-full flex items-center justify-center bg-white border border-gray-300 shadow-lg"
       style={{ aspectRatio: "16/9" }}
     >
       <p className="text-center text-4xl text-gray-500 font-bold">No Image</p>
