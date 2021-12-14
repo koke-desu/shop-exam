@@ -98,3 +98,45 @@ export type Character = {
     [name in string]: number;
   };
 };
+
+// nameの値によって、ダイスロールの種類を返す。
+export const statusDiceRoll = (name: DicedStatusName) => {
+  if (name === "STR" || name === "CON" || name === "DEX" || name === "POW" || name === "APP")
+    return "3D6";
+  else if (name === "INT" || name === "SIZ") return "2D6+6";
+  else if (name === "EDU") return "3D6+3";
+};
+
+// Statusの値によって対応した色を返す。高ければ青色、低ければ赤色みたいな感じに。
+export const statusColor = (val: number, name: DicedStatusName) => {
+  // 3D6, 2D6+6, 3D6+3, のぞれそれの場合における処理の関数
+  const case1 = (val: number) => {
+    if (val === 18) return "text-yellow-400";
+    if (val >= 12) return "text-blue-400";
+    if (val === 3) return "text-red-700";
+    if (val < 6) return "text-red-400";
+    return "";
+  };
+  const case2 = (val: number) => {
+    if (val === 18) return "text-yellow-400";
+    if (val >= 14) return "text-blue-400";
+    if (val === 8) return "text-red-700";
+    if (val < 10) return "text-red-400";
+    return "";
+  };
+  const case3 = (val: number) => {
+    if (val === 21) return "text-yellow-400";
+    if (val >= 15) return "text-blue-400";
+    if (val === 6) return "text-red-700";
+    if (val < 9) return "text-red-400";
+    return "";
+  };
+
+  //
+  const diceRoll = statusDiceRoll(name);
+  if (diceRoll === "3D6") return case1(val);
+  if (diceRoll === "2D6+6") return case2(val);
+  if (diceRoll === "3D6+3") return case3(val);
+
+  return "";
+};
