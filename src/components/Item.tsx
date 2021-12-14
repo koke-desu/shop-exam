@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { dicedStatusName, statusColor, undicedStatusName } from "../database/characterType";
+import { dicedStatusName, undicedStatusName } from "../database/characterType";
 import { ItemInterface } from "../database/itemInterface";
 import { Item as ItemType } from "../database/type";
 type Props = {};
@@ -73,9 +73,7 @@ const Status = ({ id, status }: { id: string; status: ItemType["status"] }) => (
           key={`item-${id}-skill-${name}`}
         >
           <p className="w-20 p-2">{name}</p>
-          <p className={`p-2 ${statusColor(status[name], name)}`}>
-            {status[name] ? status[name] : 0}
-          </p>
+          <p className="p-2">{status[name] ? status[name] : 0}</p>
         </div>
       ))}
     </div>
