@@ -155,7 +155,7 @@ export const calcStatus = (
     case "知識":
       return status.EDU * 5 >= 100 ? 99 : status.EDU * 5;
     case "HP":
-      return (status.CON + status.SIZ) / 2;
+      return Math.floor((status.CON + status.SIZ) / 2);
     case "MP":
       return status.POW;
   }
