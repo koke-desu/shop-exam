@@ -1,9 +1,10 @@
+import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { cartContext } from "../App";
 import { dicedStatusName, statusColor, undicedStatusName } from "../database/characterType";
 import { ItemInterface } from "../database/itemInterface";
-import { Item as ItemType } from "../database/type";
+import { Item as ItemType, Review as ReviewType } from "../database/type";
 type Props = {};
 
 // itemのシングルビュー
@@ -15,6 +16,21 @@ const Item: React.VFC<Props> = ({}) => {
   useEffect(() => {
     itemId && ItemInterface.get(itemId).then(setItem);
   }, []);
+
+  // レビュー投稿処理
+  const addReview = async (title: string, body: string) => {
+    if (!item) return;
+    const review: ReviewType = {
+      id: "",
+      title,
+      body,
+      stars: 0,
+      timeStamp: dayjs(),
+    };
+
+    await ItemInterface.addReview(item.id, review);
+    ItemInterface.get(item.id).then(setItem);
+  };
 
   // カートへの追加処理。
   const [showDialog, setShowDialog] = useState(false);
@@ -63,7 +79,7 @@ const Item: React.VFC<Props> = ({}) => {
       </div>
 
       <div className="col-span-5">
-        <Reviews reviews={item.reviews} />
+        <Reviews reviews={item.reviews} addReview={addReview} />
       </div>
     </div>
   );
@@ -132,10 +148,47 @@ const Info = ({ timeStamp, downloaded }: Pick<ItemType, "timeStamp" | "downloade
 );
 
 //
-const Reviews = ({ reviews }: Pick<ItemType, "reviews">) => {
+const Reviews = ({
+  reviews,
+  addReview,
+}: Pick<ItemType, "reviews"> & { addReview: (title: string, body: string) => Promise<void> }) => {
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+
   return (
-    <div className="flex flex-col w-full p-4 gap-4">
+    <div className="flex flex-col w-2/3 p-4 gap-4">
       <h2 className="text-2xl border-b-2 border-gray-700 w-2/3 px-4">レビュー</h2>
+      <div className="flex flex-col relative border gap-2 border-gray p-2 rounded-lg">
+        <div className="flex flex-row justify-between">
+          <h3 className="text-lg font-bold">レビューを投稿</h3>
+          <button
+            onClick={() => {
+              setTitle("");
+              setBody("");
+              addReview(title, body);
+            }}
+            className="px-8 py-2 bg-gray-300 rounded-xl shadow-lg"
+          >
+            投稿
+          </button>
+        </div>
+        <input
+          value={title}
+          onChange={(e) => {
+            setTitle(e.currentTarget.value);
+          }}
+          placeholder="レビューのタイトル"
+          className="p-2 border border-gray-300 rounded-lg"
+        />
+        <textarea
+          value={body}
+          onChange={(e) => {
+            setBody(e.currentTarget.value);
+          }}
+          placeholder="レビューの本文"
+          className="p-2 border border-gray-300 rounded-lg"
+        />
+      </div>
       {reviews.map((review) => (
         <div className="flex flex-col border border-gray p-2 rounded-lg ">
           <h3 className="text-lg font-bold border-b border-gray-700 w-max px-2 pt-2">

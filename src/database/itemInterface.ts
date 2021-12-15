@@ -9,7 +9,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { initialize } from "./initialize";
-import { Item as ItemType } from "./type";
+import { Item as ItemType, Review } from "./type";
 import dayjs from "dayjs";
 
 export class ItemInterface {
@@ -38,6 +38,18 @@ export class ItemInterface {
     const item = await this.get(itemId);
 
     return updateDoc(doc(db, `items/${itemId}`), { downloaded: item.downloaded + 1 });
+  };
+
+  // レビューを追加
+  public static addReview = async (itemId: string, review: Review) => {
+    initialize();
+
+    const db = getFirestore();
+    const item = await this.get(itemId);
+
+    const newReview = { ...review, timeStamp: Timestamp.fromDate(item.timeStamp.toDate()) };
+    console.log({ reviews: [...item.reviews, newReview] });
+    return updateDoc(doc(db, `items/${itemId}`), { reviews: [...item.reviews, newReview] });
   };
 
   public static create = async (item: ItemType) => {
