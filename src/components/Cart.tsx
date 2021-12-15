@@ -26,7 +26,7 @@ const Cart: React.VFC<Props> = ({}) => {
     setShow(true);
     setTimeout(() => {
       cart.setCart({ ...cart, items: [] });
-      navigate("/list");
+      navigate("/");
     }, 1500);
   };
 

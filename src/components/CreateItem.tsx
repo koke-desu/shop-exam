@@ -86,7 +86,7 @@ const CreateItem: React.VFC<Props> = ({}) => {
     }
 
     reset();
-    navigate("/list");
+    navigate("/");
   });
 
   return (
