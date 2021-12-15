@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { MdSearch as SearchIcon } from "react-icons/md";
 import { MdMode as CreateIcon } from "react-icons/md";
 import { MdList as ManageIcon } from "react-icons/md";
 import { MdAccountCircle as UserIcon } from "react-icons/md";
+import { MdShoppingCart as CartIcon } from "react-icons/md";
+import { cartContext } from "../App";
 
 type Props = {};
 
 // Top、探す、つくる、管理する、へのリンクの設置。余裕があればmodalを使ったHelpを作れば完成度が上がりそう。
 const Header: React.VFC<Props> = ({}) => {
+  const cart = useContext(cartContext);
+
   return (
     <div className="w-full h-20 bg-header flex justify-center items-center">
       <div className="container h-full flex flex-row justify-end items-center flex-nowrap">
@@ -34,8 +38,14 @@ const Header: React.VFC<Props> = ({}) => {
             />
           </ul>
         </nav>
-        <div className="">
-          <UserIcon size={64} fill="white" />
+        <Link className="mx-4 relative" to="/cart">
+          <p className="absolute -top-2 -right-2 m-0 h-6 w-6 text-white font-bold text-center rounded-full bg-red-500">
+            {cart.items.length}
+          </p>
+          <CartIcon size={48} fill="white" />
+        </Link>
+        <div className="mx-4">
+          <UserIcon size={48} fill="white" />
         </div>
       </div>
     </div>
