@@ -34,6 +34,5 @@ export type Review = {
 
 // カート
 export type Cart = {
-  item: ItemThumbnail;
-  orders: number;
-}[];
+  items: Item[];
+};
