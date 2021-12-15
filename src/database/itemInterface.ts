@@ -7,16 +7,32 @@ import {
   addDoc,
   updateDoc,
   Timestamp,
+  orderBy,
+  query,
 } from "firebase/firestore";
 import { initialize } from "./initialize";
 import { Item as ItemType, Review } from "./type";
 import dayjs from "dayjs";
+import { DicedStatusName } from "./characterType";
 
 export class ItemInterface {
   public static getAll = () => {
     initialize();
     const db = getFirestore();
     return getDocs(collection(db, "items")).then((snaps) => {
+      return snaps.docs.map(
+        (doc) => ({ ...doc.data(), timeStamp: dayjs(doc.data().timeStamp.toDate()) } as ItemType)
+      );
+    });
+  };
+
+  // itemを並べ替えて返す。
+  public static getSort = (field: DicedStatusName, order: "desc" | "asc") => {
+    initialize();
+    const db = getFirestore();
+
+    const q = query(collection(db, "items"), orderBy(`status.${field}`, order));
+    return getDocs(q).then((snaps) => {
       return snaps.docs.map(
         (doc) => ({ ...doc.data(), timeStamp: dayjs(doc.data().timeStamp.toDate()) } as ItemType)
       );
