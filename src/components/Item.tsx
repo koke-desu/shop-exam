@@ -61,6 +61,10 @@ const Item: React.VFC<Props> = ({}) => {
         {/* description */}
         <p className="text-lg">{item.description}</p>
       </div>
+
+      <div className="col-span-5">
+        <Reviews reviews={item.reviews} />
+      </div>
     </div>
   );
 };
@@ -126,3 +130,20 @@ const Info = ({ timeStamp, downloaded }: Pick<ItemType, "timeStamp" | "downloade
     <p className="py-4 pl-4">{downloaded} ダウンロード</p>
   </div>
 );
+
+//
+const Reviews = ({ reviews }: Pick<ItemType, "reviews">) => {
+  return (
+    <div className="flex flex-col w-full p-4 gap-4">
+      <h2 className="text-2xl border-b-2 border-gray-700 w-2/3 px-4">レビュー</h2>
+      {reviews.map((review) => (
+        <div className="flex flex-col border border-gray p-2 rounded-lg ">
+          <h3 className="text-lg font-bold border-b border-gray-700 w-max px-2 pt-2">
+            {review.title}
+          </h3>
+          <p className="p-2">{review.body}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
