@@ -31,6 +31,15 @@ export class ItemInterface {
     });
   };
 
+  // 商品購入処理。今は、downloadedを1増やすだけ。
+  public static buy = async (itemId: string) => {
+    initialize();
+    const db = getFirestore();
+    const item = await this.get(itemId);
+
+    return updateDoc(doc(db, `items/${itemId}`), { downloaded: item.downloaded + 1 });
+  };
+
   public static create = async (item: ItemType) => {
     initialize();
     const db = getFirestore();
