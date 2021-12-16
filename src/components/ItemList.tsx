@@ -75,7 +75,6 @@ const ItemList: React.VFC<Props> = ({}) => {
             </button>
           </div>
 
-          <h2>並替え</h2>
           <div className="flex flex-row w-full ">
             <ul className="w-1/2 items-center flex flex-col gap-2">
               <p className="px-4 mb-4 text-2xl border-b-2 border-gray-500">ステータス名</p>
@@ -138,7 +137,7 @@ const ItemList: React.VFC<Props> = ({}) => {
           並替え
         </button>
       </div>
-      <div className="mt-8 container grid grid-cols-3 gap-8">
+      <div className="py-16 container grid grid-cols-3 gap-8">
         {items.map((item) => (
           <ItemCard item={item} key={`item-list-${item.id}`} />
         ))}

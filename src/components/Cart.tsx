@@ -31,7 +31,7 @@ const Cart: React.VFC<Props> = ({}) => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto py-16">
       <div className="flex flex-col mx-auto w-2/3 justify-start items-center gap-4">
         {cart.items.map((item, index) => (
           <div className="flex-1 w-full flex flex-row justify-start items-center border border-gray-300 gap-4 shadow-md rounded-lg p-4">
