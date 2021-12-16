@@ -30,7 +30,7 @@ const ItemList: React.VFC<Props> = ({}) => {
     <div className="w-full flex flex-col justify-start items-center p-4 pt-8 ">
       <div
         className={`fixed z-20 flex justify-center items-center top-20 w-4/5 rounded-lg mx-auto p-4 shadow-lg bg-red-300 ring-1 ring-offset-2 ring-red-500 backdrop-blur-lg duration-300 ${
-          showDialog ? "opacity-100" : "opacity-0"
+          showDialog ? "opacity-100" : "hidden"
         } `}
       >
         <p className="text-center flex-1 text-lg">
@@ -138,7 +138,7 @@ const ItemList: React.VFC<Props> = ({}) => {
           並替え
         </button>
       </div>
-      <div className="mt-8 container grid grid-cols-3 gap-y-16">
+      <div className="mt-8 container grid grid-cols-3 gap-8">
         {items.map((item) => (
           <ItemCard item={item} key={`item-list-${item.id}`} />
         ))}
