@@ -47,7 +47,7 @@ const Item: React.VFC<Props> = ({}) => {
   return !item ? (
     <div>商品が見つかりませんでした。</div>
   ) : (
-    <div className="container grid grid-cols-5 gap-12 mx-auto ">
+    <div className="container py-16 grid grid-cols-5 gap-12 mx-auto ">
       <div
         className={`fixed fle justify-center items-center top-16 w-4/5 rounded-lg mx-auto p-4 shadow-lg bg-blue-300 ring-1 ring-offset-2 backdrop-blur-lg duration-300 ${
           showDialog ? "opacity-100" : "opacity-0"

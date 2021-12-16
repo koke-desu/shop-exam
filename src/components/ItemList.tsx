@@ -3,6 +3,7 @@ import { dicedStatusName, DicedStatusName } from "../database/characterType";
 import { ItemInterface } from "../database/itemInterface";
 import { Item as ItemType } from "../database/type";
 import ItemCard from "./ItemCard";
+import { MdClose as CloseIcon } from "react-icons/md";
 
 type Props = {};
 
@@ -13,6 +14,8 @@ const ItemList: React.VFC<Props> = ({}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [sortField, setSortField] = useState<DicedStatusName | null>(null);
   const [order, setOrder] = useState<"asc" | "desc">("asc");
+
+  const [showDialog, setShowDialog] = useState(true);
 
   useEffect(() => {
     ItemInterface.getAll().then(setItems);
@@ -25,6 +28,24 @@ const ItemList: React.VFC<Props> = ({}) => {
 
   return (
     <div className="w-full flex flex-col justify-start items-center p-4 pt-8 ">
+      <div
+        className={`fixed z-20 flex justify-center items-center top-20 w-4/5 rounded-lg mx-auto p-4 shadow-lg bg-red-300 ring-1 ring-offset-2 ring-red-500 backdrop-blur-lg duration-300 ${
+          showDialog ? "opacity-100" : "hidden"
+        } `}
+      >
+        <p className="text-center flex-1 text-lg">
+          このWebアプリは授業で作った、テストアプリです。表示されている商品、価格などはすべてフィクションです。
+        </p>
+        <CloseIcon
+          fill="#fff"
+          size={32}
+          className="cursor-pointer"
+          onClick={() => {
+            setShowDialog(false);
+          }}
+        />
+      </div>
+
       <div
         className={`fixed z-10 inset-0 bg-black bg-opacity-20 w-screen h-screen ${
           !isOpen ? "hidden" : ""
@@ -54,7 +75,6 @@ const ItemList: React.VFC<Props> = ({}) => {
             </button>
           </div>
 
-          <h2>並替え</h2>
           <div className="flex flex-row w-full ">
             <ul className="w-1/2 items-center flex flex-col gap-2">
               <p className="px-4 mb-4 text-2xl border-b-2 border-gray-500">ステータス名</p>
@@ -117,7 +137,7 @@ const ItemList: React.VFC<Props> = ({}) => {
           並替え
         </button>
       </div>
-      <div className="mt-8 container grid grid-cols-3 gap-y-16">
+      <div className="py-16 container grid grid-cols-3 gap-8">
         {items.map((item) => (
           <ItemCard item={item} key={`item-list-${item.id}`} />
         ))}

@@ -10,7 +10,7 @@ const ItemCard: React.VFC<Props> = ({ item }) => {
   return (
     <Link
       to={`/item/${item.id}`}
-      className="h-72 w-64 flex flex-col justify-self-center shadow-lg border border-gray-200"
+      className="col-span-1 w-full flex flex-col justify-self-center shadow-lg border border-gray-200"
     >
       {item.icon ? (
         <img
@@ -20,11 +20,14 @@ const ItemCard: React.VFC<Props> = ({ item }) => {
           alt={item.name}
         />
       ) : (
-        <div className="w-full h-36 flex items-center justify-center bg-white">
+        <div
+          className="w-full flex items-center justify-center bg-white"
+          style={{ aspectRatio: "16/9" }}
+        >
           <p className="text-center text-4xl text-gray-500 font-bold">No Image</p>
         </div>
       )}
-      <div className="bg-gray-100 flex-1 w-full p-4 flex flex-col relative gap-2">
+      <div className="bg-indigo-100 flex-1 w-full p-4 flex flex-col relative gap-2">
         <p className="text-sm ml-auto">{item.timeStamp.format("MM/DD")}</p>
         <p className="text-xl overflow-ellipsis overflow-hidden">{item.name}</p>
         <p>

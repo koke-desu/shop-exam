@@ -24,7 +24,7 @@ const Header: React.VFC<Props> = ({}) => {
             <NavButton
               title="さがす"
               icon={<SearchIcon fill="#fff" opacity={0.5} size={48} />}
-              link="/list"
+              link="/"
             />
             <NavButton
               title="つくる"

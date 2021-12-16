@@ -3,10 +3,7 @@ import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   calcStatus,
-  Character,
-  defaultSkillName,
   dicedStatusName,
-  SkillCategory,
   statusColor,
   undicedStatusName,
 } from "../database/characterType";
@@ -52,8 +49,12 @@ const CreateItem: React.VFC<Props> = ({}) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onSubmit = handleSubmit(async (value) => {
-    // ここでUndicedStatusの値を計算する。
+    // 文字列になってしまっているから、数字に変換
     let status = { ...value.status };
+    dicedStatusName.forEach((key) => {
+      status[key] = Number(status[key]);
+    });
+    // ここでUndicedStatusの値を計算する。
     undicedStatusName.forEach((name) => {
       status[name] = calcStatus(status, name);
     });
@@ -86,11 +87,11 @@ const CreateItem: React.VFC<Props> = ({}) => {
     }
 
     reset();
-    navigate("/list");
+    navigate("/");
   });
 
   return (
-    <div className="container flex items-center justify-center">
+    <div className="container flex items-center justify-center py-16">
       <form onSubmit={onSubmit} className="flex flex-col gap-6" style={{ maxWidth: "512px" }}>
         <input type="file" onChange={onUpload} hidden ref={inputRef} />
         {image ? (
@@ -156,7 +157,9 @@ const CreateItem: React.VFC<Props> = ({}) => {
                 key={`create-status-${name}`}
               >
                 <p className="w-20 p-2">{name}</p>
-                <p className="">{calcStatus(watch("status"), name)}</p>
+                <p className="text-sm font-light text-gray-400">
+                  {calcStatus(watch("status"), name)}
+                </p>
               </div>
             ))}
           </div>
