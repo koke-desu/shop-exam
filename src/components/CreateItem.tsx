@@ -5,6 +5,7 @@ import {
   calcStatus,
   Character,
   defaultSkillName,
+  DicedStatusName,
   dicedStatusName,
   SkillCategory,
   statusColor,
@@ -52,8 +53,12 @@ const CreateItem: React.VFC<Props> = ({}) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onSubmit = handleSubmit(async (value) => {
-    // ここでUndicedStatusの値を計算する。
+    // 文字列になってしまっているから、数字に変換
     let status = { ...value.status };
+    dicedStatusName.forEach((key) => {
+      status[key] = Number(status[key]);
+    });
+    // ここでUndicedStatusの値を計算する。
     undicedStatusName.forEach((name) => {
       status[name] = calcStatus(status, name);
     });
